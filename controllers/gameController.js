@@ -20,7 +20,21 @@ const getGames = async (req, res) => {
 	res.status(200).json(allGames);
 };
 // GET ONE
+const getGame = async (req, res) => {
+	const { id } = req.params;
 
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(404).json({ error: 'Game ID not valid' });
+	}
+
+	const singleGame = await Game.findById(id);
+
+	if (!singleGame) {
+		return res.status(404).json({ error: 'Game not found' });
+	}
+
+	res.status(200).json(singleGame);
+};
 // UPDATE
 
 // DELETE
@@ -28,4 +42,5 @@ const getGames = async (req, res) => {
 module.exports = {
 	createGame,
 	getGames,
+	getGame,
 };
