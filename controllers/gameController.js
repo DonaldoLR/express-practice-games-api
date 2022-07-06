@@ -15,7 +15,10 @@ const createGame = async (req, res) => {
 };
 
 // GET ALL
-
+const getGames = async (req, res) => {
+	const allGames = await Game.find({}).sort({ createdAt: -1 });
+	res.status(200).json(allGames);
+};
 // GET ONE
 
 // UPDATE
@@ -24,4 +27,5 @@ const createGame = async (req, res) => {
 
 module.exports = {
 	createGame,
+	getGames,
 };
