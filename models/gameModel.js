@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const gameSchema = new Schema(
 	{
 		title: {
-			type: string,
+			type: String,
 			required: true,
 		},
 		release_year: {
-			type: number,
+			type: Number,
 			required: false,
 		},
 	},
