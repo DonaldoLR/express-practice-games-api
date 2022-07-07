@@ -36,11 +36,43 @@ const getGame = async (req, res) => {
 	res.status(200).json(singleGame);
 };
 // UPDATE
+const updateGame = async (req, res) => {
+	const { id } = req.params;
 
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(404).json({ error: 'Game ID not valid' });
+	}
+
+	const updatedGame = await Game.findByIdAndUpdate(id, {
+		...req.body,
+	});
+
+	if (!updatedGame) {
+		return res.status(500).json({ error: 'Unable to update game' });
+	}
+
+	res.status(200).json({ message: 'Game updated', updatedGame });
+};
 // DELETE
+const deleteGame = async (req, res) => {
+	const { id } = req.params;
 
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(404).json({ error: 'Game ID not valid' });
+	}
+
+	const deletedGame = await Game.findByIdAndDelete(id);
+
+	if (!deletedGame) {
+		return res.status(500).json({ error: 'Unable to delete game' });
+	}
+
+	res.status(200).json({ message: 'Game deleted', deletedGame });
+};
 module.exports = {
 	createGame,
 	getGames,
 	getGame,
+	updateGame,
+	deleteGame,
 };
